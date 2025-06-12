@@ -1,0 +1,99 @@
+include:
+  - project: "development/gitlab-ci-implement-templates"
+    file: "/template/ignore-workflow-for-git-bot.yml"
+  - project: "development/gitlab-ci-implement-templates"
+    file: "/script/frontend/scripts-common.yml"
+
+# TODO 파이프라인 잡 캐시 정책, .pnpm-store 등으로 대체 해야 한다고 함
+# cache:
+#   key:
+#     files:
+#       - pnpm-lock.yaml
+#   paths:
+#     - node_modules/
+#     - packages/*/node_modules
+
+# 배포 템플릿
+.publish-template:
+  image: node:20
+  before_script:
+    # 빌드 준비
+    - echo "빌드를 준비 합니다..."
+    - npm install -g pnpm
+    - !reference [.setup_gitlab_bot]
+    # 브랜치 validation, 커밋 해시 기반으로 동작하는 경우 변경 필요함.
+    - |
+      git fetch origin
+      git checkout -B $CI_COMMIT_REF_NAME
+  script:
+    - ":" # dummy no-op
+  after_script:
+    # 빌드 및 배포 시작 (빌드가 완료되면 dist 에 생성 됩니다.)
+    - echo "빌드를 진행 합니다..."
+    - !reference [.install_package]
+    - |
+      pnpm build-targets
+    - |
+      pnpm publish-targets-minor
+
+stages:
+  - test
+  - publish
+  - update-public-assets-type
+
+# 테스트
+# 병합 요청이 생성되었을 때 변경된 패키지들을 test 합니다.
+test:
+  stage: test
+  image: node:20
+  before_script:
+    - npm install -g pnpm
+  script:
+    - !reference [.install_package]
+    - |
+      echo "배포 대상들을 밸리데이션 체크 합니다..."
+      pnpm validate-targets
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+  tags:
+    - project-configure
+
+# 배포
+# main 에 푸쉬 이벤트가 발생 하면 변경된 패키지들을 publish 합니다.
+publish:
+  stage: publish
+  extends: .publish-template
+  rules:
+    - if: '($CI_PIPELINE_SOURCE == "push") && ($CI_COMMIT_REF_NAME == "main")'
+  tags:
+    - project-deploy
+
+# - public assets type 을 업데이트 합니다. 커밋을 메인에 푸쉬 하므로, 이후 배포 파이프라인이 트리거 됩니다.
+# - 파이프라인 아티팩트로 통신하기에, library-js 를 트리거하는 리포지토리의 js-token-access 범위에 등록 되어야 합니다. (= CI_JOB_TOKEN 이 권한이 있어야 함.)
+#  - 참고: https://gitlab.tpirates.com/development/frontend/{from-repo}/-/settings/ci_cd#js-token-access
+# - 다음값이 필수여야 합니다
+#  - 변수
+#   - CI_PIPELINE_SOURCE: trigger
+#   - JOB_NAME: update-public-assets-type
+#   - ARTIFACT_URL: 아티팩트를 다운로드 받을 주소
+update-public-assets-type:
+  stage: update-public-assets-type
+  extends: .publish-template
+  script:
+    # 아티팩트 다운로드
+    - |
+      echo "아티팩트를 다운로드 합니다..."
+      curl --fail --header "JOB-TOKEN: $CI_JOB_TOKEN" \
+        --output packages/common-util/src/script/type/public-assets-content-paths.d.ts \
+        "$ARTIFACT_URL"
+    # 커밋/푸쉬
+    - |
+      echo "변경사항을 푸쉬 합니다..."
+      git fetch origin
+      git add ./packages/common-util/src/script/type/public-assets-content-paths.d.ts
+      git commit -m "feat: update public assets type"
+      git push origin main
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "trigger" && $JOB_NAME == "update-public-assets-type"'
+  tags:
+    - project-package

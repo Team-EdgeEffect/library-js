@@ -1,0 +1,24 @@
+{
+  "name": "root",
+  "private": true,
+  "packageManager": "pnpm@9.0.1",
+  "scripts": {
+    "lint": "turbo run lint",
+    "get-changed-targets": "bash ./project-attachment/changed-targets.sh",
+    "validate-targets": "bash ./project-attachment/validate.sh",
+    "build-targets": "bash ./project-attachment/build.sh",
+    "publish-targets-minor": "lerna publish minor --yes",
+    "publish-targets-patch": "lerna publish patch --yes",
+    "publish-canary": "bash ./project-attachment/publish-canary.sh",
+    "format": "prettier --write \"**/*.{js,ts,jsx,tsx,css,scss,html,json,md}\" && prettier --write \"{*.js,*.ts,*.jsx,*.tsx,*.css,*.scss,*.html,*.json,*.md}\""
+  },
+  "devDependencies": {
+    "@locked-dobby/eslint-config": "~2.1.0",
+    "@locked-dobby/prettier-config": "~2.1.0",
+    "eslint": "~9.28.0",
+    "lerna": "~8.2.2",
+    "prettier": "~3.5.3",
+    "turbo": "~2.5.4",
+    "typescript": "~5.8.3"
+  }
+}
