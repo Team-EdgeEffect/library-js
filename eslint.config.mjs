@@ -1,7 +1,7 @@
-import thePirates from "@locked-dobby/eslint-config";
+import base from "@locked-dobby/eslint-config";
 
 const eslintConfig = [
-  ...thePirates.configs.typescript,
+  ...base.configs.typescript,
   {
     ignores: [
       "*.cjs",

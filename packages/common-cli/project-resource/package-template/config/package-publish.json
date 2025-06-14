@@ -1,0 +1,43 @@
+{
+  "name": "{package-name}",
+  "description": "{project-description}",
+  "version": "0.0.0",
+  "homepage": "{project-git-url}#readme",
+  "author": {
+    "name": "{author-name}",
+    "email": "{author-email}",
+    "url": "{author-url}"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+{project-git-url}"
+  },
+  "bugs": {
+    "url": "{project-git-url}/issues",
+    "email": "{author-email}"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n CJS,ESM,TYPE,POST 'pnpm build:cjs --watch' 'pnpm build:esm --watch' 'pnpm build:type --watch' 'pnpm dev:post'",
+    "dev:post": "onchange './src/**/*.ts' './src/**/*.tsx' -- pnpm post-build",
+    "lint": "eslint .",
+    "test": "echo Test skipped! instead build... && tsc && npm run build",
+    "build:cjs": "swc src --out-dir ./dist/cjs --config-file swc-cjs.json --ignore '**/*.d.ts' --strip-leading-paths",
+    "build:esm": "swc src --out-dir ./dist/esm --config-file swc-esm.json --ignore '**/*.d.ts' --strip-leading-paths",
+    "build:type": "tsc --outDir ./dist/type --project ./tsconfig.type.json",
+    "build": "rm -rf ./dist && concurrently -n CJS,ESM,TYPE 'pnpm build:cjs' 'pnpm build:esm' 'pnpm build:type' && pnpm post-build",
+    "post-build": "bash ./project-attachment/post-build.sh"
+  },
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/type/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/type/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": ["dist"],
+  "license": "MIT"
+}

@@ -1,0 +1,45 @@
+{
+  "name": "@edge-effect/common-cli",
+  "description": "CLI 기반 으로 몇가지 개발에 도움이 되는 기능들을 제공 합니다.",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Team-EdgeEffect/library-js#readme",
+  "author": {
+    "name": "@edge-effect#hpark",
+    "email": "dark1451@gmail.com",
+    "url": "https://github.com/dark1451"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Team-EdgeEffect/library-js"
+  },
+  "bugs": {
+    "url": "https://github.com/Team-EdgeEffect/library-js/issues",
+    "email": "dark1451@gmail.com"
+  },
+  "scripts": {
+    "dev-command": "ts-node ./src/bin/main.ts",
+    "lint": "eslint .",
+    "test": "echo Test skipped! instead build... && tsc && npm run build",
+    "build:cjs": "swc src --out-dir ./dist --config-file swc-cjs.json --ignore '**/*.d.ts' --strip-leading-paths",
+    "build": "rm -rf ./dist && npm run build:cjs && cp -r ./project-resource ./dist/project-resource"
+  },
+  "bin": {
+    "@edge-effect/common-cli": "./dist/bin/main.js"
+  },
+  "files": [
+    "dist",
+    "project-resource"
+  ],
+  "devDependencies": {
+    "@swc/cli": "^0.7.7",
+    "@swc/core": "^1.11.29",
+    "@types/fs-extra": "~11.0.4",
+    "ts-node": "~10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "commander": "~13.1.0",
+    "fs-extra": "~11.3.0"
+  }
+}
