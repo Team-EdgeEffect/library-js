@@ -35,6 +35,9 @@
   - node_modules
   - turbo
 - 패키지는 packages/a, packages/b 형태로 배치될것임
+- 모든 패키지는 lint, test 스크립트를 구현함 (type-check 는 검토)
+  - 최초에 test 스크립트는 빌드로 대체함
+- 가능하다면 변경이된 패키지들만 PR에 의한 밸리데이션 체크 및 푸쉬에 의한 배포대상들만 해당되면 좋을듯 함.
 
 ## 후속
 

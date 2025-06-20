@@ -10,10 +10,6 @@ inputs:
     description: "pnpm version"
     required: false
     default: "9"
-  cache-turbo:
-    description: "Cache turbo build artifacts"
-    required: false
-    default: "true"
 
 runs:
   using: composite
@@ -28,25 +24,16 @@ runs:
       with:
         version: ${{ inputs.pnpm-version }}
 
-    - name: Cache node_modules
+    - name: Cache dependencies
       uses: actions/cache@v4
       with:
         path: |
           **/node_modules
-        key: node-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
-        restore-keys: |
-          node-modules-
-
-    - name: Cache turbo build
-      if: inputs.cache-turbo == 'true'
-      uses: actions/cache@v4
-      with:
-        path: |
-          .turbo
           **/dist
-        key: turbo-build-${{ github.sha }}
+        key: deps-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ github.sha }}
         restore-keys: |
-          turbo-build-
+          deps-${{ hashFiles('**/pnpm-lock.yaml') }}-
+          deps-
 
     - name: Install dependencies
       shell: bash

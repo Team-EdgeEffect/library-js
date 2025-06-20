@@ -17,8 +17,6 @@ jobs:
 
       - name: Setup Environment
         uses: ./.github/actions/setup-action
-        with:
-          cache-turbo: false
 
       - name: Generate Release Notes
         uses: softprops/action-gh-release@v1
