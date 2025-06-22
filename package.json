@@ -2,14 +2,16 @@
   "name": "root",
   "packageManager": "pnpm@9.0.1",
   "scripts": {
-    "lint": "turbo run lint",
+    "lint": "pnpm --recursive run lint",
+    "test": "pnpm --recursive run test",
+    "build": "pnpm --recursive run build",
+    "dev": "pnpm --recursive run dev",
     "get-changed-targets": "bash ./project-attachment/changed-targets.sh",
     "validate-targets": "bash ./project-attachment/validate.sh",
     "build-targets": "bash ./project-attachment/build.sh",
-    "publish-targets-minor": "lerna publish minor --yes",
-    "publish-targets-patch": "lerna publish patch --yes",
+    "publish": "pnpm lerna publish --yes --conventional-commits",
     "publish-canary": "bash ./project-attachment/publish-canary.sh",
-    "dev-playground": "turbo run dev --filter=playground --filter=@edge-effect/react-dialog --filter=@edge-effect/query-factory",
+    "dev-playground": "pnpm dev --filter playground",
     "add-package": "pnpm --filter common-cli dev create-package --dest-dir='./packages' --project-organization='edge-effect' --post-target-action 'pnpm install -w' --can-publish --yes",
     "format": "prettier --write \"**/*.{js,ts,jsx,tsx,css,scss,html,json,md}\" && prettier --write \"{*.js,*.ts,*.jsx,*.tsx,*.css,*.scss,*.html,*.json,*.md}\""
   },
@@ -19,7 +21,6 @@
     "eslint": "~9.28.0",
     "lerna": "~8.2.2",
     "prettier": "~3.5.3",
-    "turbo": "~2.5.4",
     "typescript": "~5.8.3"
   },
   "license": "MIT"
