@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/Team-EdgeEffect/library-js/compare/@edge-effect/common-cli@0.2.0...@edge-effect/common-cli@0.2.1) (2025-06-23)
+
+### Bug Fixes
+
+- package json content ([d08af3c](https://github.com/Team-EdgeEffect/library-js/commit/d08af3c195d59cd4bd06e47cc057454902c89e29))
+
 # [0.2.0](https://github.com/Team-EdgeEffect/library-js/compare/@edge-effect/common-cli@0.1.2...@edge-effect/common-cli@0.2.0) (2025-06-23)
 
 ### Features
