@@ -16,6 +16,9 @@
     "url": "{project-git-url}/issues",
     "email": "{author-email}"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "dev": "concurrently -k -n CJS,ESM,TYPE,POST 'pnpm build:cjs --watch' 'pnpm build:esm --watch' 'pnpm build:type --watch' 'pnpm dev:post'",
     "dev:post": "onchange './src/**/*.ts' './src/**/*.tsx' -- pnpm post-build",

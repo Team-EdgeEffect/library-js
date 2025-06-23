@@ -1,7 +1,7 @@
 {
   "name": "@edge-effect/common-cli",
   "description": "CLI 기반 으로 몇가지 개발에 도움이 되는 기능들을 제공 합니다.",
-  "version": "0.0.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/Team-EdgeEffect/library-js#readme",
   "author": {
     "name": "@edge-effect#hpark",
@@ -15,6 +15,9 @@
   "bugs": {
     "url": "https://github.com/Team-EdgeEffect/library-js/issues",
     "email": "dark1451@gmail.com"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "dev-command": "ts-node ./src/bin/main.ts",

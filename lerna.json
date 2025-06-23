@@ -5,7 +5,10 @@
   "command": {
     "publish": {
       "conventionalCommits": true,
-      "message": "feat: publish"
+      "message": "build(release): publish",
+      "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+      }
     }
   }
 }
