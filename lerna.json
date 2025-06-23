@@ -5,10 +5,7 @@
   "command": {
     "publish": {
       "conventionalCommits": true,
-      "message": "build(release): publish",
-      "publishConfig": {
-        "access": "public"
-      }
+      "message": "build(release): publish"
     }
   }
 }

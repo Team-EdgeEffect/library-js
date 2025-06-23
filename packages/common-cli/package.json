@@ -16,6 +16,9 @@
     "url": "https://github.com/Team-EdgeEffect/library-js/issues",
     "email": "dark1451@gmail.com"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "dev-command": "ts-node ./src/bin/main.ts",
     "lint": "eslint .",
