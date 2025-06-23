@@ -17,7 +17,7 @@
     "email": "dark1451@gmail.com"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
   },
   "scripts": {
     "dev-command": "ts-node ./src/bin/main.ts",

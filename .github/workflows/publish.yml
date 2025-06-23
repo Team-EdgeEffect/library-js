@@ -34,7 +34,9 @@ jobs:
         run: pnpm build-targets
 
       - name: Publish packages
-        run: pnpm publish-packages
+        run: |
+          cd packages/common-cli
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
