@@ -16,7 +16,7 @@ import { installPackageSync } from "../util/package-utils";
 
 // TODO type of react-vite
 
-console.info("Hello World");
+console.info("Hello World2");
 
 const bucket = new CommandOptionBucket([
   // command options
