@@ -40,7 +40,4 @@ jobs:
           npm config set provenance true
 
       - name: Publish packages
-        run: |
-          cd packages/common-cli
-          npm run build
-          npm publish --access public
+        run: pnpm publish-packages
