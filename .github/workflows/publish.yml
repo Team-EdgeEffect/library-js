@@ -33,11 +33,14 @@ jobs:
       - name: Build packages
         run: pnpm build-targets
 
+      - name: Configure NPM
+        run: |
+          npm config set registry https://registry.npmjs.org/
+          npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
+          npm config set provenance true
+
       - name: Publish packages
         run: |
           cd packages/common-cli
+          npm run build
           npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
