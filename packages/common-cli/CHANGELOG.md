@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/Team-EdgeEffect/library-js/compare/@edge-effect/common-cli@0.1.2...@edge-effect/common-cli@0.2.0) (2025-06-23)
+
+### Features
+
+- publish config each packages ([8043bae](https://github.com/Team-EdgeEffect/library-js/commit/8043baefade9a6af14a51a4ae355376afd523a6e))
+
 ## [0.1.2](https://github.com/Team-EdgeEffect/library-js/compare/@edge-effect/common-cli@0.1.1...@edge-effect/common-cli@0.1.2) (2025-06-23)
 
 **Note:** Version bump only for package @edge-effect/common-cli
