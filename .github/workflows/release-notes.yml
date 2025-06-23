@@ -3,10 +3,11 @@ name: Generate Release Notes
 on:
   push:
     tags:
-      - "@edge-effect/*@*"
+      - "*"
 
 jobs:
   release-notes:
+    if: startsWith(github.ref, 'refs/tags/@edge-effect/')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
