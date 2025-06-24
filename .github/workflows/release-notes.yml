@@ -3,10 +3,14 @@ name: Generate Release Notes
 on:
   push:
     tags:
-      - "@edge-effect/*@*"
+      - "*"
+
+permissions:
+  contents: write
 
 jobs:
   release-notes:
+    if: startsWith(github.ref, 'refs/tags/@edge-effect/')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -18,11 +22,19 @@ jobs:
       - name: Setup Environment
         uses: ./.github/actions/setup-action
 
+      - name: Set changelog path
+        id: changelog
+        run: |
+          TAG_NAME="${GITHUB_REF#refs/tags/}"
+          # 패키지명 추출: @edge-effect/{package-name}@{version} → {package-name}
+          PACKAGE_NAME=$(echo "$TAG_NAME" | sed -E 's/@edge-effect\/([^@]+)@.*/\1/')
+          CHANGELOG_PATH="packages/${PACKAGE_NAME}/CHANGELOG.md"
+          echo "changelog_path=${CHANGELOG_PATH}" >> $GITHUB_OUTPUT
+
       - name: Generate Release Notes
         uses: softprops/action-gh-release@v1
         with:
           generate_release_notes: true
-          files: |
-            packages/*/CHANGELOG.md
+          files: ${{ steps.changelog.outputs.changelog_path }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
