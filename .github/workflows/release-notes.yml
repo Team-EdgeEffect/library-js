@@ -5,6 +5,9 @@ on:
     tags:
       - "*"
 
+permissions:
+  contents: write
+
 jobs:
   release-notes:
     if: startsWith(github.ref, 'refs/tags/@edge-effect/')
