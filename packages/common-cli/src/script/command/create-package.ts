@@ -9,7 +9,7 @@ import {
   BooleanOption,
   CommandOptionBucket,
   StringOption,
-} from "../module/command-module";
+} from "../module/create-package/command-option";
 import { askQuestion } from "../util/cli-utils";
 import { overwriteFile } from "../util/file-utils";
 import { installPackageSync } from "../util/package-utils";
@@ -298,7 +298,7 @@ command
     );
     fs.copyFileSync(
       optionVariables.tsconfig ||
-        path.join(configTemplateDir, `tsconfig.${optionVariables.type}.json`),
+        path.join(configTemplateDir, optionVariables.type, "tsconfig.json"),
       path.join(outputDir, "tsconfig.json")
     );
     fs.copyFileSync(
@@ -308,12 +308,12 @@ command
     );
     fs.copyFileSync(
       optionVariables["swc-cjs"] ||
-        path.join(configTemplateDir, `swc-cjs.${optionVariables.type}.json`),
+        path.join(configTemplateDir, optionVariables.type, "swc-cjs.json"),
       path.join(outputDir, "swc-cjs.json")
     );
     fs.copyFileSync(
       optionVariables["swc-esm"] ||
-        path.join(configTemplateDir, `swc-esm.${optionVariables.type}.json`),
+        path.join(configTemplateDir, optionVariables.type, "swc-esm.json"),
       path.join(outputDir, "swc-esm.json")
     );
     // gitignore 파일명을 돌려놓습니다.
