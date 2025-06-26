@@ -9,12 +9,14 @@ import {
   BooleanOption,
   CommandOptionBucket,
   StringOption,
-} from "../module/command-module";
+} from "../module/create-package/command-option";
 import { askQuestion } from "../util/cli-utils";
 import { overwriteFile } from "../util/file-utils";
 import { installPackageSync } from "../util/package-utils";
 
-// TODO type of react-vite
+// TODO type of react-vite -> npm create vite@7.0.0 test-vite-pkg -- --template react-swc-ts
+// TODO package manager 선택 가능하게.
+// TODO 패키지 버전 정확하게 세팅 (not latest)
 
 const bucket = new CommandOptionBucket([
   // command options
@@ -92,7 +94,7 @@ const bucket = new CommandOptionBucket([
       `--an, --author-name <author-name>`,
       "프로젝트 author 이름을 입력하세요. project-organization 가 입력 된 경우 @{project-organization}#{author-name} 형태로 입력 됩니다."
     ),
-    defaultValue: "it_dev",
+    defaultValue: "dark1451",
   }),
   new StringOption({
     name: "author-email",
@@ -296,7 +298,7 @@ command
     );
     fs.copyFileSync(
       optionVariables.tsconfig ||
-        path.join(configTemplateDir, `tsconfig.${optionVariables.type}.json`),
+        path.join(configTemplateDir, optionVariables.type, "tsconfig.json"),
       path.join(outputDir, "tsconfig.json")
     );
     fs.copyFileSync(
@@ -306,12 +308,12 @@ command
     );
     fs.copyFileSync(
       optionVariables["swc-cjs"] ||
-        path.join(configTemplateDir, `swc-cjs.${optionVariables.type}.json`),
+        path.join(configTemplateDir, optionVariables.type, "swc-cjs.json"),
       path.join(outputDir, "swc-cjs.json")
     );
     fs.copyFileSync(
       optionVariables["swc-esm"] ||
-        path.join(configTemplateDir, `swc-esm.${optionVariables.type}.json`),
+        path.join(configTemplateDir, optionVariables.type, "swc-esm.json"),
       path.join(outputDir, "swc-esm.json")
     );
     // gitignore 파일명을 돌려놓습니다.
@@ -340,8 +342,7 @@ command
         dependencyTargets: ["--save-dev"],
         packageRootPath: outputDir,
       });
-      // TODO 리액트 버전 고를수 있게.
-      // TODO 버전 표기법
+
       if (optionVariables.type === "react") {
         // pnpm add react react-dom --save-peer --save-dev
         installPackageSync({
