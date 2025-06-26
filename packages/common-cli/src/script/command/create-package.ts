@@ -14,7 +14,9 @@ import { askQuestion } from "../util/cli-utils";
 import { overwriteFile } from "../util/file-utils";
 import { installPackageSync } from "../util/package-utils";
 
-// TODO type of react-vite
+// TODO type of react-vite -> npm create vite@7.0.0 test-vite-pkg -- --template react-swc-ts
+// TODO package manager 선택 가능하게.
+// TODO 패키지 버전 정확하게 세팅 (not latest)
 
 const bucket = new CommandOptionBucket([
   // command options
@@ -340,8 +342,7 @@ command
         dependencyTargets: ["--save-dev"],
         packageRootPath: outputDir,
       });
-      // TODO 리액트 버전 고를수 있게.
-      // TODO 버전 표기법
+
       if (optionVariables.type === "react") {
         // pnpm add react react-dom --save-peer --save-dev
         installPackageSync({
