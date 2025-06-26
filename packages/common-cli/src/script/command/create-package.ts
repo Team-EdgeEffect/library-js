@@ -92,7 +92,7 @@ const bucket = new CommandOptionBucket([
       `--an, --author-name <author-name>`,
       "프로젝트 author 이름을 입력하세요. project-organization 가 입력 된 경우 @{project-organization}#{author-name} 형태로 입력 됩니다."
     ),
-    defaultValue: "it_dev",
+    defaultValue: "dark1451",
   }),
   new StringOption({
     name: "author-email",
