@@ -13,7 +13,7 @@
     "publish-packages": "pnpm lerna publish --yes --conventional-commits",
     "publish-package-canary": "bash ./project-attachment/publish-canary.sh",
     "dev-playground": "pnpm dev --filter playground",
-    "add-package": "pnpm --filter common-cli dev create-package --dest-dir='./packages' --project-organization='edge-effect' --post-target-action 'pnpm install -w' --can-publish --yes",
+    "add-package": "pnpm --filter common-cli dev-command create-package --dest-dir='./packages' --project-organization='edge-effect' --post-target-action 'pnpm install -w' --can-publish --yes",
     "format": "prettier --write \"**/*.{js,ts,jsx,tsx,css,scss,html,json,md}\" && prettier --write \"{*.js,*.ts,*.jsx,*.tsx,*.css,*.scss,*.html,*.json,*.md}\""
   },
   "devDependencies": {
