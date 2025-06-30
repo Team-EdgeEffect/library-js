@@ -1,5 +1,5 @@
-import { CreatePackageType } from "../type/create-package";
-import { Dependency } from "../type/dependency";
+import { CreatePackageType } from "../../type/create-package";
+import { Dependency } from "../../type/dependency";
 
 const sharedDependencies: Array<Dependency> = [
   { name: "@swc/cli", version: "~0.7.7", targets: ["--save-dev"] },

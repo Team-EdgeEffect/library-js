@@ -5,6 +5,8 @@ import { Command, Option } from "commander";
 import fs from "fs-extra";
 import path from "path";
 
+import { CreatePackageType } from "../../type/create-package";
+import { dependencyConfigs } from "../config/dependecy-configs";
 import {
   BooleanOption,
   CommandOptionBucket,
@@ -24,7 +26,7 @@ const bucket = new CommandOptionBucket([
     name: "type",
     option: new Option(
       `-t, --type <type>`,
-      "패키지 타입을 선택하세요. lib, react 중 하나를 선택 할 수 있습니다. lib는 라이브러리, react은 웹 애플리케이션을 의미합니다. 해당 값에 따라 tsconfig 가 적절히 생성됩니다."
+      "패키지 타입을 선택하세요. lib, react-swc 중 하나를 선택 할 수 있습니다. lib는 라이브러리, react-swc은 웹 애플리케이션을 의미합니다. 해당 값에 따라 tsconfig 가 적절히 생성됩니다."
     ),
     isRequired: true,
   }),
@@ -207,8 +209,8 @@ command
         parsedOption.meta.name === "type" &&
         parsedOption.value
       ) {
-        if (!["lib", "react"].includes(parsedOption.value)) {
-          console.error("패키지 타입은 lib 또는 react 중 하나여야 합니다.");
+        if (!["lib", "react-swc"].includes(parsedOption.value)) {
+          console.error("패키지 타입은 lib 또는 react-swc 중 하나여야 합니다.");
           return;
         }
       }
@@ -238,7 +240,7 @@ command
     };
     // 기타 전체 옵션에 접근 하는 변수를 선언 합니다.
     const optionVariables = {
-      type: bucket.getOptionValueString("type"),
+      type: bucket.getOptionValueString("type") as CreatePackageType,
       tsconfig: bucket.tryOptionValueString("tsconfig"),
       "tsconfig-type": bucket.tryOptionValueString("tsconfig-type"),
       "swc-cjs": bucket.tryOptionValueString("swc-cjs"),
@@ -286,7 +288,13 @@ command
     }
 
     // 템플릿 복사 작업을 시작합니다.
+    // base template 을 복사 합니다.
     fs.copySync(baseTemplateDir, outputDir);
+    // gitignore 파일명을 돌려놓습니다.
+    fs.renameSync(
+      path.join(outputDir, "gitignore"),
+      path.join(outputDir, ".gitignore")
+    );
     fs.copyFileSync(
       path.join(
         configTemplateDir,
@@ -316,11 +324,6 @@ command
         path.join(configTemplateDir, optionVariables.type, "swc-esm.json"),
       path.join(outputDir, "swc-esm.json")
     );
-    // gitignore 파일명을 돌려놓습니다.
-    fs.renameSync(
-      path.join(outputDir, "gitignore"),
-      path.join(outputDir, ".gitignore")
-    );
 
     // 복사한 템플릿을 인자값에 의해 업데이트 합니다.
     overwriteFile(`${outputDir}/package.json`, configVariables);
@@ -329,34 +332,13 @@ command
 
     if (!optionVariables["without-install"]) {
       // 복사한 템플릿에 디펜던시를 추가합니다.
-      // pnpm add @swc/cli @swc/core --save-dev
-      installPackageSync({
-        packageList: [
-          "@swc/cli@latest",
-          "@swc/core@latest",
-          "typescript@latest",
-          "chokidar@latest",
-          "concurrently@latest",
-          "onchange@latest",
-        ],
-        dependencyTargets: ["--save-dev"],
-        packageRootPath: outputDir,
+      dependencyConfigs[optionVariables.type].forEach((dependency) => {
+        installPackageSync({
+          packageList: [dependency.name],
+          dependencyTargets: dependency.targets,
+          packageRootPath: outputDir,
+        });
       });
-
-      if (optionVariables.type === "react") {
-        // pnpm add react react-dom --save-peer --save-dev
-        installPackageSync({
-          packageList: ["react@latest", "react-dom@latest"],
-          dependencyTargets: ["--save-peer", "--save-dev"],
-          packageRootPath: outputDir,
-        });
-        // pnpm add -D @types/react @types/react-dom
-        installPackageSync({
-          packageList: ["@types/react@latest", "@types/react-dom@latest"],
-          dependencyTargets: ["--save-dev"],
-          packageRootPath: outputDir,
-        });
-      }
     }
 
     try {
