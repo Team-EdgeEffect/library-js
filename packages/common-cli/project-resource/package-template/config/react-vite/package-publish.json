@@ -1,0 +1,43 @@
+{
+  "name": "{package-name}",
+  "description": "{project-description}",
+  "version": "0.0.0",
+  "homepage": "{project-git-url}#readme",
+  "author": {
+    "name": "{author-name}",
+    "email": "{author-email}",
+    "url": "{author-url}"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+{project-git-url}"
+  },
+  "bugs": {
+    "url": "{project-git-url}/issues",
+    "email": "{author-email}"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "dev": "vite",
+    "lint": "eslint .",
+    "test": "echo Test skipped! instead build... && tsc && npm run build",
+    "build": "rm -rf ./dist && tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": ["dist"],
+  "license": "MIT"
+}
