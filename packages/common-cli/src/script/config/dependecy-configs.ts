@@ -91,10 +91,5 @@ export const dependencyConfigs: Record<CreatePackageType, Dependency[]> = {
       version: "~8.34.1",
       targets: ["--save-dev"],
     },
-    {
-      name: "@types/node",
-      version: "~24.0.7",
-      targets: ["--save-dev"],
-    },
   ],
 };

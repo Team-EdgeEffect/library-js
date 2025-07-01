@@ -1,5 +1,5 @@
 import reactLogo from "../resource/image/react.svg";
-import viteLogo from "/vite.svg";
+import viteLogo from "../resource/image/vite.svg";
 
 import "../resource/style/app.css";
 import { useCounter } from "./hook/use-counter";
