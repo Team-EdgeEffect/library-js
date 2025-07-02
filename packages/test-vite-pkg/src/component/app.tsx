@@ -3,6 +3,8 @@ import viteLogo from "../resource/image/vite.svg";
 
 import "../resource/style/app.css";
 import { useCounter } from "./hook/use-counter";
+import { ModuleCssComponent } from "./view/module-css-component";
+import { CssImportComponent } from "./view/css-import-component";
 
 const App = () => {
   const [count, setCount] = useCounter(0);
@@ -29,6 +31,8 @@ const App = () => {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <CssImportComponent data="test" />
+      <ModuleCssComponent />
     </>
   );
 };

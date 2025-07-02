@@ -9,6 +9,20 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    },
+    "./style.css": "./dist/test-vite-pkg.css"
+  },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
