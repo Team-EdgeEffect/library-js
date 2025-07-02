@@ -18,7 +18,7 @@ import { installPackageSync } from "../util/package-utils";
 
 // TODO type of react-vite -> npm create vite@7.0.0 test-vite-pkg -- --template react-swc-ts
 // TODO package manager 선택 가능하게.
-// TODO 패키지 버전 정확하게 세팅 (not latest)
+// TODO react-vite 에서 스타일 반영 방식 고도화
 
 const bucket = new CommandOptionBucket([
   // command options
