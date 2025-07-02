@@ -30,16 +30,15 @@
     "build": "rm -rf ./dist && concurrently -n CJS,ESM,TYPE 'pnpm build:cjs' 'pnpm build:esm' 'pnpm build:type' && pnpm post-build",
     "post-build": "bash ./project-attachment/post-build.sh"
   },
+  "types": "./dist/type/index.d.ts",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
-  "types": "./dist/type/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/esm/index.js",
+      "types": "./dist/type/index.d.ts",
       "require": "./dist/cjs/index.js",
-      "types": "./dist/type/index.d.ts"
-    },
-    "./package.json": "./package.json"
+      "import": "./dist/esm/index.js"
+    }
   },
   "files": ["dist"],
   "license": "MIT"
