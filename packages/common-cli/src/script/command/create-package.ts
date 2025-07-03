@@ -6,7 +6,7 @@ import fs from "fs-extra";
 import path from "path";
 
 import { CreatePackageType } from "../../type/create-package";
-import { dependencyConfigs } from "../config/dependecy-configs";
+import { dependencyConfigs } from "../config/dependency-configs";
 import {
   BooleanOption,
   CommandOptionBucket,
@@ -19,6 +19,7 @@ import { installPackageSync } from "../util/package-utils";
 // TODO type of react-vite -> npm create vite@7.0.0 test-vite-pkg -- --template react-swc-ts
 // TODO package manager 선택 가능하게.
 // TODO react-vite 에서 스타일 반영 방식 고도화
+// TODO license 고를수 있도록 (private or mit)
 
 const bucket = new CommandOptionBucket([
   // command options

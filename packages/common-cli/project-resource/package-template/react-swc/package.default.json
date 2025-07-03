@@ -1,0 +1,17 @@
+{
+  "name": "{package-name}",
+  "description": "{project-description}",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "concurrently -k -n CJS,ESM,TYPE,POST 'pnpm build:cjs --watch' 'pnpm build:esm --watch' 'pnpm build:type --watch' 'pnpm dev:post'",
+    "dev:post": "onchange './src/**/*.ts' './src/**/*.tsx' -- pnpm post-build",
+    "lint": "eslint .",
+    "test": "echo Test skipped! instead build... && tsc && npm run build",
+    "build:cjs": "swc src --out-dir ./dist/cjs --config-file swc-cjs.json --ignore '**/*.d.ts' --strip-leading-paths",
+    "build:esm": "swc src --out-dir ./dist/esm --config-file swc-esm.json --ignore '**/*.d.ts' --strip-leading-paths",
+    "build:type": "tsc --outDir ./dist/type --project ./tsconfig.type.json",
+    "build": "rm -rf ./dist && concurrently -n CJS,ESM,TYPE 'pnpm build:cjs' 'pnpm build:esm' 'pnpm build:type' && pnpm post-build",
+    "post-build": "bash ./project-attachment/post-build.sh"
+  },
+  "license": "MIT"
+}
