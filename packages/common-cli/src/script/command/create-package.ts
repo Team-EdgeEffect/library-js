@@ -16,7 +16,6 @@ import { askQuestion } from "../util/cli-utils";
 import { createFolder, overwriteFile, resolvePath } from "../util/file-utils";
 import { setDependenciesToPackageJson } from "../util/package-utils";
 
-// TODO package manager 선택 가능하게.
 // TODO react-vite 에서 스타일 반영 방식 고도화
 // TODO license 고를수 있도록 (private or mit)
 // TODO user name git config 기준
@@ -31,6 +30,14 @@ const bucket = new CommandOptionBucket([
       "패키지 타입을 선택하세요. lib, react-swc, react-vite 중 하나를 선택 할 수 있습니다. lib는 라이브러리, react-swc은 가벼운 웹 라이브러리, react-vite는 vite 기반 웹 라이브러리 입니다. 해당 값에 따라 프로젝트 템플릿이 적절하게 세팅 됩니다."
     ),
     isRequired: true,
+  }),
+  new StringOption({
+    name: "package-manager",
+    option: new Option(
+      `--pm, --package-manager <package-manager>`,
+      "패키지 매니저를 선택하세요. npm, yarn, pnpm, bun 중 하나를 선택 할 수 있습니다. 기본값은 pnpm입니다."
+    ),
+    defaultValue: "pnpm",
   }),
   new StringOption({
     name: "dest-dir",
@@ -225,6 +232,19 @@ command
           return;
         }
       }
+
+      if (
+        parsedOption instanceof StringOption &&
+        parsedOption.meta.name === "package-manager" &&
+        parsedOption.value
+      ) {
+        if (!["npm", "yarn", "pnpm"].includes(parsedOption.value)) {
+          console.error(
+            "패키지 매니저는 npm, yarn, pnpm 중 하나여야 합니다. 자세한 내용은 help 옵션을 참고 해주세요."
+          );
+          return;
+        }
+      }
     }
 
     // 옵션에서 변수를 초기화 합니다.
@@ -252,6 +272,7 @@ command
     // 기타 전체 옵션에 접근 하는 변수를 선언 합니다.
     const optionVariables = {
       type: bucket.getOptionValueString("type") as CreatePackageType,
+      packageManager: bucket.getOptionValueString("package-manager"),
       tsconfig: bucket.tryOptionValueString("tsconfig"),
       "tsconfig-type": bucket.tryOptionValueString("tsconfig-type"),
       "swc-cjs": bucket.tryOptionValueString("swc-cjs"),
@@ -407,7 +428,10 @@ command
 
     // 패키지 인스톨 작업 - without-install 플래그 확인하여 설치 실행
     if (!optionVariables["without-install"]) {
-      spawnSync("pnpm", ["install"], { stdio: "inherit", cwd: outputDir });
+      spawnSync(optionVariables.packageManager, ["install"], {
+        stdio: "inherit",
+        cwd: outputDir,
+      });
     }
 
     try {
