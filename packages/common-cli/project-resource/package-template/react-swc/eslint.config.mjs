@@ -3,16 +3,15 @@ import lint from "@locked-dobby/eslint-config";
 const eslintConfig = [
   ...lint.configs.base,
   ...lint.configs.typescript,
+  ...lint.configs.react,
   {
     ignores: [
       "*.cjs",
       "node_modules",
       "project-attachment/**/*",
-      "**/dist/**",
+      "dist",
       ".vite",
       ".github",
-      "packages/eslint-config/**/*.js",
-      "packages/prettier-config/**/*.js",
     ],
   },
 ];

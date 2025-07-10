@@ -8,11 +8,9 @@ const eslintConfig = [
       "*.cjs",
       "node_modules",
       "project-attachment/**/*",
-      "**/dist/**",
+      "dist",
       ".vite",
       ".github",
-      "packages/eslint-config/**/*.js",
-      "packages/prettier-config/**/*.js",
     ],
   },
 ];
