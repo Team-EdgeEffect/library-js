@@ -14,7 +14,6 @@
 ```
 # @edge-effect/common-cli
 [![npm version](https://img.shields.io/npm/v/@edge-effect/common-cli)](https://www.npmjs.com/package/@edge-effect/common-cli)
-[![GitHub package](https://img.shields.io/badge/github-packages-available-brightgreen)](https://github.com/Team-EdgeEffect/library-js/pkgs/npm/@edge-effect%2Fcommon-cli)
 ```
 
 ### 2. 소개(Description)

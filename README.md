@@ -1,21 +1,11 @@
-# library-js
+# Library-js
 
-- library-js 는 자바스크립트 기반 패키지를 관리하는 모노레포 입니다.
-- 패키지 리스트
-  - [packages](./packages/)
-  - [playground](./apps/playground/) (example)
+- 자바스크립트 기반 패키지를 관리 하고 있습니다.
+- 자세한 내용은 패키지 리스트를 확인 하세요.
 
-## 1. Skills
+# 패키지 리스트
 
-- `lerna`: 패키지 버저닝/배포 자동화 (conventional commits 기반)
-- `pnpm workspace`: 멀티 패키지 의존성 관리 및 태스크 실행
-
-## 2. Installation
-
-```typescript
-pnpm install --frozen-lockfile
-```
-
-## 3. Git flow
-
-- TBU
+| 패키지명                            | 설명                                                          |
+| ----------------------------------- | ------------------------------------------------------------- |
+| [common-cli](./packages/common-cli) | CLI 기반 으로 몇가지 개발에 도움이 되는 기능들을 제공 합니다. |
+| playground                          | 예제/테스트용 앱 패키지 (추가 예정)                           |

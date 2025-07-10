@@ -1,7 +1,6 @@
 # @edge-effect/common-cli
 
 [![npm version](https://img.shields.io/npm/v/@edge-effect/common-cli)](https://www.npmjs.com/package/@edge-effect/common-cli)
-[![GitHub package](https://img.shields.io/badge/github-packages-available-brightgreen)](https://github.com/Team-EdgeEffect/library-js/pkgs/npm/@edge-effect%2Fcommon-cli)
 
 ## 소개(Description)
 
@@ -36,29 +35,42 @@ npx @edge-effect/common-cli create-package --type lib --project-name my-lib --pr
 
 ### create-package
 
-| 옵션(Short/Long)               | 파라미터                 | 필수 | 기본값                                                         | 설명                                   |
-| ------------------------------ | ------------------------ | ---- | -------------------------------------------------------------- | -------------------------------------- |
-| `-t, --type`                   | `<type>`                 | ✅   | 없음                                                           | 패키지 타입 선택 (`lib`, `react`)      |
-| `-d, --dest-dir`               | `<dest-dir>`             |      | 현재 경로                                                      | 패키지 생성 루트(워크스페이스) 경로    |
-| `--pa, --post-action`          | `<post-action>`          |      | 없음                                                           | 생성 후 실행할 액션(호출 위치 기준)    |
-| `--pta, --post-target-action`  | `<post-target-action>`   |      | 없음                                                           | 생성 후 실행할 액션(outputDir 기준)    |
-| `--pn, --project-name`         | `<project-name>`         | ✅   | 없음                                                           | 프로젝트 이름(폴더명, kebab-case 추천) |
-| `--pd, --project-description`  | `<project-description>`  | ✅   | 없음                                                           | 프로젝트 설명                          |
-| `--pgu, --project-git-url`     | `<project-git-url>`      |      | `https://github.com/Team-EdgeEffect/library-js`                | 프로젝트 Git 주소                      |
-| `--pkg-n, --package-name`      | `<package-name>`         |      | `{project-name}` 또는 `@{project-organization}/{project-name}` | 패키지(모듈)명                         |
-| `--po, --project-organization` | `<project-organization>` |      | 없음                                                           | 프로젝트 조직 이름                     |
-| `--an, --author-name`          | `<author-name>`          |      | `dark1451`                                                     | author 이름                            |
-| `--ae, --author-email`         | `<author-email>`         |      | `dark1451@gmail.com`                                           | author 이메일                          |
-| `--au, --author-url`           | `<author-url>`           |      | `https://github.com/dark1451`                                  | author URL                             |
-| `--ts, --tsconfig`             | `<tsconfig>`             |      | 없음                                                           | 사용할 tsconfig.json 경로              |
-| `--ts-type, --tsconfig-type`   | `<tsconfig-type>`        |      | 없음                                                           | type 빌드용 tsconfig.json 경로         |
-| `--swc-cjs`                    | `<swc-cjs>`              |      | 없음                                                           | swc cjs 빌드용 파일 경로               |
-| `--swc-esm`                    | `<swc-esm>`              |      | 없음                                                           | swc esm 빌드용 파일 경로               |
-| `--cp, --can-publish`          |                          |      | `false`                                                        | 배포 가능한 패키지 여부                |
-| `--wi, --without-install`      |                          |      | `false`                                                        | 기본 종속성 설치 생략                  |
-| `-y, --yes`                    |                          |      | `false`                                                        | 모든 대화형 입력에 기본값 사용         |
+| 옵션(Short/Long)               | 파라미터                 | 필수 | 기본값                                                         | 설명                                                |
+| ------------------------------ | ------------------------ | ---- | -------------------------------------------------------------- | --------------------------------------------------- |
+| `-t, --type`                   | `<type>`                 | ✅   | 없음                                                           | 패키지 타입 선택 (`lib`, `react-swc`, `react-vite`) |
+| `--pm, --package-manager`      | `<package-manager>`      |      | `pnpm`                                                         | 사용할 패키지 매니저 선택 (`npm`, `yarn`, `pnpm`)   |
+| `-d, --dest-dir`               | `<dest-dir>`             |      | 현재 경로                                                      | 패키지 생성 루트(워크스페이스) 경로                 |
+| `--pa, --post-action`          | `<post-action>`          |      | 없음                                                           | 생성 후 실행할 액션(호출 위치 기준)                 |
+| `--pta, --post-target-action`  | `<post-target-action>`   |      | 없음                                                           | 생성 후 실행할 액션(outputDir 기준)                 |
+| `--pn, --project-name`         | `<project-name>`         | ✅   | 없음                                                           | 프로젝트 이름(폴더명, kebab-case 추천)              |
+| `--pd, --project-description`  | `<project-description>`  | ✅   | 없음                                                           | 프로젝트 설명                                       |
+| `--pgu, --project-git-url`     | `<project-git-url>`      |      | `https://github.com/Team-EdgeEffect/library-js`                | 프로젝트 Git 주소                                   |
+| `--pkg-n, --package-name`      | `<package-name>`         |      | `{project-name}` 또는 `@{project-organization}/{project-name}` | 패키지(모듈)명                                      |
+| `--po, --project-organization` | `<project-organization>` |      | 없음                                                           | 프로젝트 조직 이름                                  |
+| `--an, --author-name`          | `<author-name>`          |      | `dark1451`                                                     | author 이름                                         |
+| `--ae, --author-email`         | `<author-email>`         |      | `dark1451@gmail.com`                                           | author 이메일                                       |
+| `--au, --author-url`           | `<author-url>`           |      | `https://github.com/dark1451`                                  | author URL                                          |
+| `--ts, --tsconfig`             | `<tsconfig>`             |      | 없음                                                           | 사용할 tsconfig.json 경로                           |
+| `--ts-type, --tsconfig-type`   | `<tsconfig-type>`        |      | 없음                                                           | type 빌드용 tsconfig.json 경로                      |
+| `--swc-cjs`                    | `<swc-cjs>`              |      | 없음                                                           | swc cjs 빌드용 파일 경로                            |
+| `--swc-esm`                    | `<swc-esm>`              |      | 없음                                                           | swc esm 빌드용 파일 경로                            |
+| `--cp, --can-publish`          |                          |      | `false`                                                        | 배포 가능한 패키지 여부                             |
+| `--wi, --without-install`      |                          |      | `false`                                                        | 기본 종속성 설치 생략                               |
+| `-y, --yes`                    |                          |      | `false`                                                        | 모든 대화형 입력에 기본값 사용                      |
 
-- 기타 옵션 및 상세 설명은 `--help` 옵션으로 확인할 수 있습니다.
+#### 패키지 타입 설명
+
+- **lib**:  
+  순수 TypeScript/JavaScript 라이브러리 템플릿.  
+  범용 유틸, 데이터 처리 등 프레임워크 비종속 라이브러리 개발에 적합.
+
+- **react-swc**:  
+  SWC 기반 경량 React 라이브러리 템플릿.  
+  빠른 빌드, 최소 번들 환경. React 컴포넌트/훅 등 UI 라이브러리 개발에 적합.
+
+- **react-vite**:  
+  Vite 기반 최신 React 라이브러리 템플릿.  
+  정적 리소스, 스타일 처리, 라이브러리 모드 등 실전 패키지 개발에 최적화.
 
 ## 변경 이력(Changelog)
 
@@ -71,8 +83,3 @@ MIT
 ## 기여(Contributing)
 
 - 이슈/PR 환영합니다!
-- 코드 컨벤션, 기여 가이드 등은 [CONTRIBUTING.md](./CONTRIBUTING.md) 참고(존재 시)
-
-```
-
-```
