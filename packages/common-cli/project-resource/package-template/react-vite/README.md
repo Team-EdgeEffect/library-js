@@ -4,7 +4,7 @@
 
 # Created by [@edge-effect/common-cli](https://github.com/Team-EdgeEffect/library-js/tree/main/packages/common-cli) create-package --type="lib"
 
-This template is set up with minimal additional settings for Vite-based package development.
+This template is set up with minimal additional settings for Vite-based(npm create vite@7.0.0 {name} -- --template react-swc-ts) package development.
 
 ## How to provide styles?
 

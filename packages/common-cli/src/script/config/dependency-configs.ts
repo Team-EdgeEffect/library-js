@@ -10,6 +10,7 @@ const sharedDependencies: Array<Dependency> = [
   { name: "onchange", version: "~7.1.0", targets: ["--save-dev"] },
 ];
 
+// TODO bulk install
 export const dependencyConfigs: Record<CreatePackageType, Dependency[]> = {
   lib: [...sharedDependencies],
   "react-swc": [
@@ -52,8 +53,13 @@ export const dependencyConfigs: Record<CreatePackageType, Dependency[]> = {
       targets: ["--save-dev"],
     },
     {
+      name: "@types/react",
+      version: "~19.1.0",
+      targets: ["--save-dev"],
+    },
+    {
       name: "@types/react-dom",
-      version: "~19.1.6",
+      version: "~19.1.0",
       targets: ["--save-dev"],
     },
     {
@@ -89,6 +95,16 @@ export const dependencyConfigs: Record<CreatePackageType, Dependency[]> = {
     {
       name: "typescript-eslint",
       version: "~8.34.1",
+      targets: ["--save-dev"],
+    },
+    {
+      name: "vite",
+      version: "~7.0.0",
+      targets: ["--save-dev"],
+    },
+    {
+      name: "vite-plugin-dts",
+      version: "~4.5.4",
       targets: ["--save-dev"],
     },
   ],

@@ -1,10 +1,19 @@
 import fs from "fs-extra";
+import path from "path";
+
+export const resolvePath = (filePath: string, baseDir: string): string => {
+  return path.isAbsolute(filePath) ? filePath : path.resolve(baseDir, filePath);
+};
 
 export const overwriteFile = (
   path: string,
   overwrites: { [key: string]: string }
 ) => {
-  if (!overwrites) return;
+  if (!fs.existsSync(path)) {
+    console.warn(`⚠️  경로에 파일이 없습니다: ${path}`);
+    return;
+  }
+
   let fileContent = fs.readFileSync(path).toString();
 
   const entries = Object.entries(overwrites);

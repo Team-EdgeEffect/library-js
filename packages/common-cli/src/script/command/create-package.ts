@@ -13,13 +13,14 @@ import {
   StringOption,
 } from "../module/create-package/command-option";
 import { askQuestion } from "../util/cli-utils";
-import { overwriteFile } from "../util/file-utils";
-import { installPackageSync } from "../util/package-utils";
+import { createFolder, overwriteFile, resolvePath } from "../util/file-utils";
+import { setDependenciesToPackageJson } from "../util/package-utils";
 
-// TODO type of react-vite -> npm create vite@7.0.0 test-vite-pkg -- --template react-swc-ts
 // TODO package manager 선택 가능하게.
 // TODO react-vite 에서 스타일 반영 방식 고도화
 // TODO license 고를수 있도록 (private or mit)
+// TODO user name git config 기준
+// TODO 에러나면 작업사항 롤백
 
 const bucket = new CommandOptionBucket([
   // command options
@@ -27,7 +28,7 @@ const bucket = new CommandOptionBucket([
     name: "type",
     option: new Option(
       `-t, --type <type>`,
-      "패키지 타입을 선택하세요. lib, react-swc 중 하나를 선택 할 수 있습니다. lib는 라이브러리, react-swc은 웹 애플리케이션을 의미합니다. 해당 값에 따라 tsconfig 가 적절히 생성됩니다."
+      "패키지 타입을 선택하세요. lib, react-swc, react-vite 중 하나를 선택 할 수 있습니다. lib는 라이브러리, react-swc은 가벼운 웹 라이브러리, react-vite는 vite 기반 웹 라이브러리 입니다. 해당 값에 따라 프로젝트 템플릿이 적절하게 세팅 됩니다."
     ),
     isRequired: true,
   }),
@@ -144,6 +145,13 @@ const bucket = new CommandOptionBucket([
       "swc 에서 esm 를 빌드 할 때 사용하고자 하는 파일의 경로 입니다."
     ),
   }),
+  new StringOption({
+    name: "eslint-config",
+    option: new Option(
+      `--eslint-config <eslint-config>`,
+      "eslint 세팅 파일의 경로 입니다."
+    ),
+  }),
   // etc options
   new BooleanOption({
     name: "can-publish",
@@ -210,8 +218,10 @@ command
         parsedOption.meta.name === "type" &&
         parsedOption.value
       ) {
-        if (!["lib", "react-swc"].includes(parsedOption.value)) {
-          console.error("패키지 타입은 lib 또는 react-swc 중 하나여야 합니다.");
+        if (!["lib", "react-swc", "react-vite"].includes(parsedOption.value)) {
+          console.error(
+            "패키지 타입은 lib, react-swc, react-vite 중 하나여야 합니다. 자세한 내용은 help 옵션을 참고 해주세요."
+          );
           return;
         }
       }
@@ -246,6 +256,7 @@ command
       "tsconfig-type": bucket.tryOptionValueString("tsconfig-type"),
       "swc-cjs": bucket.tryOptionValueString("swc-cjs"),
       "swc-esm": bucket.tryOptionValueString("swc-esm"),
+      "eslint-config": bucket.tryOptionValueString("eslint-config"),
       "dest-dir": bucket.tryOptionValueString("dest-dir"),
       "post-action": bucket.tryOptionValueString("post-action"),
       "post-target-action": bucket.tryOptionValueString("post-target-action"),
@@ -263,8 +274,10 @@ command
       srcDir,
       "../project-resource/package-template"
     );
-    const baseTemplateDir = path.join(packageTemplateDir, "base");
-    const configTemplateDir = path.join(packageTemplateDir, "config");
+    const targetTemplateDir = path.join(
+      packageTemplateDir,
+      optionVariables.type
+    );
     const outputDir = path.join(
       destDir ? path.join(executeDir, destDir) : executeDir,
       optionVariables["project-name"]
@@ -288,58 +301,113 @@ command
       if (requestRemove) fs.removeSync(outputDir);
     }
 
+    // TODO step by types
     // 템플릿 복사 작업을 시작합니다.
-    // base template 을 복사 합니다.
-    fs.copySync(baseTemplateDir, outputDir);
-    // gitignore 파일명을 돌려놓습니다.
-    fs.renameSync(
-      path.join(outputDir, "gitignore"),
-      path.join(outputDir, ".gitignore")
-    );
-    fs.copyFileSync(
+    // template 을 복사 합니다.
+    fs.copySync(targetTemplateDir, outputDir);
+    if (fs.existsSync(path.join(outputDir, "gitignore"))) {
+      fs.renameSync(
+        path.join(outputDir, "gitignore"),
+        path.join(outputDir, ".gitignore")
+      );
+    }
+    // package json update
+    // package json update - 사용되지 않는 package json 파일은 삭제합니다.
+    fs.rmSync(
       path.join(
-        configTemplateDir,
+        outputDir,
+        !optionVariables["can-publish"]
+          ? "package.publish.json"
+          : "package.default.json"
+      )
+    );
+    // package json update - 템플릿에 의해 복사된 package json 파일명을 제대로 수정합니다.
+    fs.renameSync(
+      path.join(
+        outputDir,
         optionVariables["can-publish"]
-          ? "package-publish.json"
-          : "package-default.json"
+          ? "package.publish.json"
+          : "package.default.json"
       ),
       path.join(outputDir, "package.json")
     );
-    fs.copyFileSync(
-      optionVariables.tsconfig ||
-        path.join(configTemplateDir, optionVariables.type, "tsconfig.json"),
-      path.join(outputDir, "tsconfig.json")
-    );
-    fs.copyFileSync(
-      optionVariables["tsconfig-type"] ||
-        path.join(configTemplateDir, "tsconfig.type.json"),
-      path.join(outputDir, "tsconfig.type.json")
-    );
-    fs.copyFileSync(
-      optionVariables["swc-cjs"] ||
-        path.join(configTemplateDir, optionVariables.type, "swc-cjs.json"),
-      path.join(outputDir, "swc-cjs.json")
-    );
-    fs.copyFileSync(
-      optionVariables["swc-esm"] ||
-        path.join(configTemplateDir, optionVariables.type, "swc-esm.json"),
-      path.join(outputDir, "swc-esm.json")
-    );
+
+    // 인풋에 의한 템플릿 덮어쓰기 작업
+    // 인풋에 의한 템플릿 덮어쓰기 작업 - tsconfig
+    if (optionVariables.tsconfig) {
+      const tsconfigPath = resolvePath(optionVariables.tsconfig, executeDir);
+      fs.copyFileSync(tsconfigPath, path.join(outputDir, "tsconfig.json"));
+    }
+    // 인풋에 의한 템플릿 덮어쓰기 작업 - tsconfig-type
+    if (optionVariables["tsconfig-type"]) {
+      const tsconfigTypePath = resolvePath(
+        optionVariables["tsconfig-type"],
+        executeDir
+      );
+      fs.copyFileSync(
+        tsconfigTypePath,
+        path.join(outputDir, "tsconfig.type.json")
+      );
+    }
+    // 인풋에 의한 템플릿 덮어쓰기 작업 - swc-cjs
+    if (optionVariables["swc-cjs"]) {
+      const swcCjsPath = resolvePath(optionVariables["swc-cjs"], executeDir);
+      fs.copyFileSync(swcCjsPath, path.join(outputDir, "swc-cjs.json"));
+    }
+    // 인풋에 의한 템플릿 덮어쓰기 작업 - swc-esm
+    if (optionVariables["swc-esm"]) {
+      const swcEsmPath = resolvePath(optionVariables["swc-esm"], executeDir);
+      fs.copyFileSync(swcEsmPath, path.join(outputDir, "swc-esm.json"));
+    }
+    // 인풋에 의한 템플릿 덮어쓰기 작업 - eslint-config
+    if (optionVariables["eslint-config"]) {
+      // 템플릿에 의해 복사된 기존 eslint 파일들 제거, 추후 파일명 통합 고려
+      ["eslint.config.mjs", "eslint.config.js"].forEach((file) => {
+        const filePath = path.join(outputDir, file);
+        if (fs.existsSync(filePath)) {
+          fs.removeSync(filePath);
+        }
+      });
+
+      // 사용자 지정 eslint 파일 복사
+      const eslintConfigPath = resolvePath(
+        optionVariables["eslint-config"],
+        executeDir
+      );
+      const eslintConfigFileName = path.basename(eslintConfigPath);
+      fs.copyFileSync(
+        eslintConfigPath,
+        path.join(outputDir, eslintConfigFileName)
+      );
+    }
 
     // 복사한 템플릿을 인자값에 의해 업데이트 합니다.
     overwriteFile(`${outputDir}/package.json`, configVariables);
     overwriteFile(`${outputDir}/LICENSE`, configVariables);
     overwriteFile(`${outputDir}/README.md`, configVariables);
 
-    if (!optionVariables["without-install"]) {
-      // 복사한 템플릿에 디펜던시를 추가합니다.
-      dependencyConfigs[optionVariables.type].forEach((dependency) => {
-        installPackageSync({
-          packageList: [dependency.name],
-          dependencyTargets: dependency.targets,
-          packageRootPath: outputDir,
-        });
+    // 필요한 폴더들을 미리 생성합니다.
+    createFolder(path.join(outputDir, "src/script"));
+    createFolder(path.join(outputDir, "src/resource"));
+    createFolder(path.join(outputDir, "src/component"));
+
+    // 패키지 인스톨 작업
+    const packageJsonPath = path.join(outputDir, "package.json");
+    const targetDependencies = dependencyConfigs[optionVariables.type];
+    // 패키지 인스톨 작업 - eslint-config가 전달되지 않은 경우 기본 eslint 설정 추가
+    if (!optionVariables["eslint-config"]) {
+      targetDependencies.push({
+        name: "@locked-dobby/eslint-config",
+        version: "~2.1.0",
+        targets: ["--save-dev"],
       });
+    }
+    // 패키지 인스톨 작업 - 의존성을 package.json에 추가
+    setDependenciesToPackageJson(packageJsonPath, targetDependencies);
+
+    // 패키지 인스톨 작업 - without-install 플래그 확인하여 설치 실행
+    if (!optionVariables["without-install"]) {
+      spawnSync("pnpm", ["install"], { stdio: "inherit", cwd: outputDir });
     }
 
     try {

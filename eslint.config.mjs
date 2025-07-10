@@ -1,11 +1,13 @@
-import base from "@locked-dobby/eslint-config";
+import lint from "@locked-dobby/eslint-config";
 
 const eslintConfig = [
-  ...base.configs.typescript,
+  ...lint.configs.base,
+  ...lint.configs.typescript,
   {
     ignores: [
       "*.cjs",
       "node_modules",
+      "project-attachment/**/*",
       "**/dist/**",
       ".vite",
       ".github",

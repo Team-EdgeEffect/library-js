@@ -1,10 +1,18 @@
-import base from "@locked-dobby/eslint-config";
+import lint from "@locked-dobby/eslint-config";
 
 const eslintConfig = [
-  ...base.configs.react,
-  ...base.configs.typescript,
+  ...lint.configs.base,
+  ...lint.configs.typescript,
+  ...lint.configs.react,
   {
-    ignores: ["*.cjs", "node_modules", "dist", ".vite", ".github"],
+    ignores: [
+      "*.cjs",
+      "node_modules",
+      "project-attachment/**/*",
+      "dist",
+      ".vite",
+      ".github",
+    ],
   },
 ];
 
