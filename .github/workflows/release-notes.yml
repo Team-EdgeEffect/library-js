@@ -3,7 +3,7 @@ name: Generate Release Notes
 on:
   push:
     tags:
-      - "*"
+      - "@edge-effect/*@*"
 
 permissions:
   contents: write
