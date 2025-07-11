@@ -4,7 +4,7 @@
 
 ## 소개(Description)
 
-전달된 제너릭 타입을 기반으로 **Context, Provider, Hook**을 한 번에 생성해 React에서 타입 세이프하고 재사용성 높은 context 패턴을 쉽게 구현할 수 있도록 돕는 유틸리티입니다.
+전달된 제너릭 타입을 팩토리 패턴을 이용하여 **Context, Provider, Hook**을 한 번에 생성해, React에서 타입 세이프하고 재사용성 높은 context 패턴을 쉽게 구현할 수 있도록 돕는 유틸리티입니다.
 
 복잡한 context boilerplate 및 데이터 타입을 빠르게 통합 해야 하는 경우 적합합니다.
 
