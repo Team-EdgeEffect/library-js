@@ -9,7 +9,10 @@ const DefaultDialogContentContainer = ({
   children,
 }: DefaultDialogContentContainerProps) => {
   return (
-    <div className={["react-dialog-content-container", className].join("")}>
+    <div
+      className={["react-abstract-dialog-content-container", className].join(
+        ""
+      )}>
       {children}
     </div>
   );

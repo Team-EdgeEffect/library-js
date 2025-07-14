@@ -52,7 +52,11 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
 
-  packages/react-context-factory:
+  packages/react-abstract-dialog:
+    dependencies:
+      '@edge-effect/react-context-factory':
+        specifier: ~1.0.1
+        version: 1.0.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     devDependencies:
       '@locked-dobby/eslint-config':
         specifier: ~2.1.0
@@ -88,11 +92,7 @@ importers:
         specifier: ~5.8.3
         version: 5.8.3
 
-  packages/react-dialog:
-    dependencies:
-      '@edge-effect/react-context-factory':
-        specifier: ~1.0.1
-        version: 1.0.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+  packages/react-context-factory:
     devDependencies:
       '@locked-dobby/eslint-config':
         specifier: ~2.1.0

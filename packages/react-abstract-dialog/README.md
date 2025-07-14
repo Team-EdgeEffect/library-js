@@ -1,4 +1,4 @@
-# react-dialog
+# react-abstract-dialog
 
 - react dialog
 
