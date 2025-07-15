@@ -45,19 +45,21 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "@locked-dobby/eslint-config": "~2.1.0",
     "@swc/cli": "~0.7.7",
     "@swc/core": "~1.11.29",
+    "@tanstack/react-query": "~4.36.1",
+    "@types/react": "~19.1.0",
+    "@types/react-dom": "~19.1.0",
     "chokidar": "~4.0.3",
     "concurrently": "~9.1.2",
-    "typescript": "~5.8.3",
     "onchange": "~7.1.0",
     "react": "~19.1.0",
     "react-dom": "~19.1.0",
-    "@types/react": "~19.1.0",
-    "@types/react-dom": "~19.1.0",
-    "@locked-dobby/eslint-config": "~2.1.0"
+    "typescript": "~5.8.3"
   },
   "peerDependencies": {
+    "@tanstack/react-query": ">=4.0.0 <5.0.0",
     "react": "~19.1.0",
     "react-dom": "~19.1.0"
   }
