@@ -39,5 +39,19 @@ jobs:
           npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
           npm config set provenance true
 
-      - name: Publish packages
-        run: pnpm publish-packages
+      - name: Run Lerna publish (no push)
+        run: pnpm lerna publish --yes --conventional-commits --no-push
+
+      - name: Re-install to refresh lockfile
+        run: pnpm install
+
+      - name: Amend lockfile if changed
+        run: |
+          if ! git diff --quiet pnpm-lock.yaml; then
+            git add pnpm-lock.yaml
+            git commit --amend --no-edit
+          fi
+
+      - name: Push commit and tags
+        run: |
+          git push origin $GITHUB_REF_NAME --follow-tags

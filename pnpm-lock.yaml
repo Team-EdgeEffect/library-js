@@ -55,8 +55,8 @@ importers:
   packages/react-abstract-dialog:
     devDependencies:
       '@edge-effect/react-context-factory':
-        specifier: ^1.1.0
-        version: 1.1.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: ^1.1.1
+        version: 1.1.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@locked-dobby/eslint-config':
         specifier: ~2.1.0
         version: 2.1.0(eslint@9.28.0)(typescript@5.8.3)
@@ -147,8 +147,8 @@ packages:
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
     engines: {node: '>=12'}
 
-  '@edge-effect/react-context-factory@1.1.0':
-    resolution: {integrity: sha512-cWhIKcZJ3M1gn3oBkM9u+KJTCKG19zAVlTg6DwlxTG1R//LsI/eXjI8Ct01RNx8JoyWf6GTw8QDtAyFvUGPd1Q==}
+  '@edge-effect/react-context-factory@1.1.1':
+    resolution: {integrity: sha512-T7I6NGFTX2dj6XxlBP7HtDlCnXvsxoCvsgCzm2f14JqEi9BPhfUKnA5kPq26R9VOAgEOOIX+/ZMX/QDflR9IEw==}
     peerDependencies:
       react: '>=18.0.0 <20.0.0'
       react-dom: '>=18.0.0 <20.0.0'
@@ -3988,7 +3988,7 @@ snapshots:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
 
-  '@edge-effect/react-context-factory@1.1.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@edge-effect/react-context-factory@1.1.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
