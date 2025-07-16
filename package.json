@@ -7,11 +7,11 @@
     "test": "pnpm --recursive run test",
     "build": "pnpm --recursive run build",
     "dev": "pnpm --recursive run dev",
+    "dev:playground": "pnpm --filter playground run dev",
     "get-changed-targets": "bash ./project-attachment/changed-targets.sh",
     "validate-targets": "bash ./project-attachment/validate.sh",
     "build-targets": "bash ./project-attachment/build.sh",
     "publish-package-canary": "bash ./project-attachment/publish-canary.sh",
-    "dev-playground": "pnpm dev --filter playground",
     "add-package": "pnpm --filter common-cli dev-command create-package --dest-dir='./packages' --project-organization='edge-effect' --post-target-action 'pnpm install -w' --can-publish --yes",
     "format": "prettier --write \"**/*.{js,ts,jsx,tsx,css,scss,html,json,md}\" && prettier --write \"{*.js,*.ts,*.jsx,*.tsx,*.css,*.scss,*.html,*.json,*.md}\""
   },
