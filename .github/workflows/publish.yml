@@ -49,9 +49,10 @@ jobs:
         run: |
           if ! git diff --quiet pnpm-lock.yaml; then
             git add pnpm-lock.yaml
-            git commit --amend --no-edit
+            git commit -m "chore: update lockfile"
           fi
 
       - name: Push commit and tags
         run: |
-          git push origin $GITHUB_REF_NAME --follow-tags
+          git push origin $GITHUB_REF_NAME
+          git push origin --tags
