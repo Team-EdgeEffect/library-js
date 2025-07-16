@@ -35,7 +35,7 @@ const bucket = new CommandOptionBucket([
     name: "package-manager",
     option: new Option(
       `--pm, --package-manager <package-manager>`,
-      "패키지 매니저를 선택하세요. npm, yarn, pnpm, bun 중 하나를 선택 할 수 있습니다. 기본값은 pnpm입니다."
+      "패키지 매니저를 선택하세요. npm, yarn, pnpm 중 하나를 선택 할 수 있습니다. 기본값은 pnpm입니다."
     ),
     defaultValue: "pnpm",
   }),
@@ -322,7 +322,7 @@ command
       if (requestRemove) fs.removeSync(outputDir);
     }
 
-    // TODO step by types
+    // TODO 함수로 변경
     // 템플릿 복사 작업을 시작합니다.
     // template 을 복사 합니다.
     fs.copySync(targetTemplateDir, outputDir);
