@@ -1,18 +1,17 @@
 # Playground
 
-- 이곳에 packages/\* 에 존재하는 패키지들에 대한 예제를 구성 합니다.
+- 이곳에 packages/\* 에 존재하는 패키지들중 일부에 대한 예제를 구성 합니다.
 
-# How to run
+# 어떻게 사용하나요?
 
 - pnpm workspace 를 사용하므로 root 에서 pnpm install 을 진행하세요.
 
-```bash
-pnpm install --frozen-lockfile
-```
+  ```bash
+  pnpm install --frozen-lockfile
+  ```
 
-# 제가 만든 패키지의 예제를 추가하고 싶어요
+- 그 뒤 루트에서 다음 명령어로 playground 를 실행 합니다.
 
-- 아래와 같이 추가 작업을 진행하세요.
-- [view](./src/component/view) 폴더에 해당 패키지의 예제 관심사 폴더를 추가하고 컨테이너를 만들고 하위 작업을 진행하세요.
-- 해당 컨테이너를 [home-container](<./src/component/view/(etc)/_home-container.tsx>), [router](./src/script/route/router.tsx) 에 추가 하세요.
-  - 관심사에 대한 네비게이션 영역이 많은 경우 routes 파일을 분리하세요.
+  ```bash
+  pnpm dev:playground
+  ```
