@@ -326,10 +326,18 @@ command
     // 템플릿 복사 작업을 시작합니다.
     // template 을 복사 합니다.
     fs.copySync(targetTemplateDir, outputDir);
+    // gitignore 파일명을 정확히 변경 합니다.
     if (fs.existsSync(path.join(outputDir, "gitignore"))) {
       fs.renameSync(
         path.join(outputDir, "gitignore"),
         path.join(outputDir, ".gitignore")
+      );
+    }
+    // tsconfig 파일명을 정확히 변경 합니다.
+    if (fs.existsSync(path.join(outputDir, "tsconfig.default.json"))) {
+      fs.renameSync(
+        path.join(outputDir, "tsconfig.default.json"),
+        path.join(outputDir, "tsconfig.json")
       );
     }
     // package json update
