@@ -1,0 +1,36 @@
+{
+  "name": "playground",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "test": "echo Test skipped! instead build... && tsc && vite build"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "~4.36.1",
+    "@tanstack/react-query-devtools": "~4.36.1",
+    "@edge-effect/react-tanstack-query-factory": "workspace:*",
+    "@edge-effect/react-abstract-dialog": "workspace:*",
+    "axios": "~1.9.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router": "~7.5.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.22.0",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.5",
+    "@vitejs/plugin-react-swc": "^3.8.0",
+    "eslint": "^9.22.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^16.0.0",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.26.1",
+    "vite": "^6.3.1"
+  }
+}

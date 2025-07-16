@@ -10,7 +10,6 @@ const sharedDependencies: Array<Dependency> = [
   { name: "onchange", version: "~7.1.0", targets: ["--save-dev"] },
 ];
 
-// TODO bulk install
 export const dependencyConfigs: Record<CreatePackageType, Dependency[]> = {
   lib: [...sharedDependencies],
   "react-swc": [

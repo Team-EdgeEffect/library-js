@@ -1,0 +1,46 @@
+/* dialog */
+.dialog-sample-wrap {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+.dialog-sample-dimmed {
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.dialog-sample-content {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.dialog-sample-dialog {
+}
+.dialog-sample-dialog-title {
+}
+.dialog-sample-dialog-message {
+}
+.dialog-sample-dialog-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* dialog toast */
+.dialog-sample-toast-section {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 32px;
+}
+.dialog-sample-toast-wrap {
+}
+.dialog-sample-dialog-message {
+}

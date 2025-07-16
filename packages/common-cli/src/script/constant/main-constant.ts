@@ -1,5 +1,5 @@
 export const mainCommandInfo = {
-  "create-package": "pnpm 기반 패키지를 생성합니다.",
+  "create-package": "패키지를 생성합니다.",
 } as const;
 
 export type MainCommand = keyof typeof mainCommandInfo;

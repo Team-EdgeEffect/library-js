@@ -1,0 +1,66 @@
+{
+  "name": "@edge-effect/react-tanstack-query-factory",
+  "description": "Tanstack query factory for react",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Team-EdgeEffect/library-js#readme",
+  "author": {
+    "name": "@edge-effect#dark1451",
+    "email": "dark1451@gmail.com",
+    "url": "https://github.com/dark1451"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Team-EdgeEffect/library-js"
+  },
+  "bugs": {
+    "url": "https://github.com/Team-EdgeEffect/library-js/issues",
+    "email": "dark1451@gmail.com"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n CJS,ESM,TYPE,POST 'pnpm build:cjs --watch' 'pnpm build:esm --watch' 'pnpm build:type --watch' 'pnpm dev:post'",
+    "dev:post": "onchange './src/**/*.ts' './src/**/*.tsx' -- pnpm post-build",
+    "lint": "eslint .",
+    "test": "echo Test skipped! instead build... && tsc && npm run build",
+    "build:cjs": "swc src --out-dir ./dist/cjs --config-file swc-cjs.json --ignore '**/*.d.ts' --strip-leading-paths",
+    "build:esm": "swc src --out-dir ./dist/esm --config-file swc-esm.json --ignore '**/*.d.ts' --strip-leading-paths",
+    "build:type": "tsc --outDir ./dist/type --project ./tsconfig.type.json",
+    "build": "rm -rf ./dist && concurrently -n CJS,ESM,TYPE 'pnpm build:cjs' 'pnpm build:esm' 'pnpm build:type' && pnpm post-build",
+    "post-build": "bash ./project-attachment/post-build.sh"
+  },
+  "types": "./dist/type/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/type/index.d.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@locked-dobby/eslint-config": "~2.1.0",
+    "@swc/cli": "~0.7.7",
+    "@swc/core": "~1.11.29",
+    "@tanstack/react-query": "~4.36.1",
+    "@types/react": "~19.1.0",
+    "@types/react-dom": "~19.1.0",
+    "chokidar": "~4.0.3",
+    "concurrently": "~9.1.2",
+    "onchange": "~7.1.0",
+    "react": "~19.1.0",
+    "react-dom": "~19.1.0",
+    "typescript": "~5.8.3"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": ">=4.0.0 <5.0.0",
+    "react": "~19.1.0",
+    "react-dom": "~19.1.0"
+  }
+}
