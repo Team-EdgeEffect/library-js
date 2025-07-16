@@ -1,7 +1,7 @@
 // https://dummyjson.com/products/search?q=hello
 // https://dummyjson.com/products/1
 
-import { createApiHook } from "@edge-effect/react-tanstack-query-factory";
+import { createApi } from "@edge-effect/react-tanstack-query-factory";
 import axios from "axios";
 
 import {
@@ -9,7 +9,7 @@ import {
   GetSearch,
 } from "@/component/view/react-tanstack-query-factory/type";
 
-export const getProduct = createApiHook<
+export const getProduct = createApi<
   GetProduct["path"],
   GetProduct["param"],
   GetProduct["body"],
@@ -25,7 +25,7 @@ export const getProduct = createApiHook<
   },
 });
 
-export const getSearch = createApiHook<
+export const getSearch = createApi<
   GetSearch["path"],
   GetSearch["param"],
   GetSearch["body"],

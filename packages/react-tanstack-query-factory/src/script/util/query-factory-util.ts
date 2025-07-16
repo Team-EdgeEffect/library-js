@@ -1,31 +1,19 @@
 import { useApiFactoryMutation } from "../../component/hook/use-api-factory-mutation";
 import { useApiFactoryQuery } from "../../component/hook/use-api-factory-query";
 import {
-  CreateApiHookArgs,
-  CreateApiHookReturn,
+  CreateApiArgs,
+  CreateApiReturn,
 } from "../type/query-factory-base-type";
 
-export const createApiHook = <
+export const createApi = <
   PathType,
   ParamType,
   BodyType,
   ResponseType,
   ErrorType = Error,
 >(
-  args: CreateApiHookArgs<
-    PathType,
-    ParamType,
-    BodyType,
-    ResponseType,
-    ErrorType
-  >
-): CreateApiHookReturn<
-  PathType,
-  ParamType,
-  BodyType,
-  ResponseType,
-  ErrorType
-> => {
+  args: CreateApiArgs<PathType, ParamType, BodyType, ResponseType, ErrorType>
+): CreateApiReturn<PathType, ParamType, BodyType, ResponseType, ErrorType> => {
   const {
     queryOptions,
     mutationOptions,

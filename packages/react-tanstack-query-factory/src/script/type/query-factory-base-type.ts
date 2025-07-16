@@ -18,7 +18,7 @@ export type ApiFactoryHookArgs<PathType, ParamType, BodyType, ResponseType> = {
   ) => Array<unknown>;
 };
 
-export type CreateApiHookReturn<
+export type CreateApiReturn<
   PathType,
   ParamType,
   BodyType,
@@ -60,7 +60,7 @@ export type CreateApiHookReturn<
   ) => Promise<ResponseType> | ResponseType;
 };
 
-export type CreateApiHookArgs<
+export type CreateApiArgs<
   PathType,
   ParamType,
   BodyType,
