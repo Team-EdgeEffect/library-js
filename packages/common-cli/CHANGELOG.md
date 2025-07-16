@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/Team-EdgeEffect/library-js/compare/@edge-effect/common-cli@1.1.1...@edge-effect/common-cli@1.2.0) (2025-07-16)
+
+### Features
+
+- common-cli 의 project resource 의 tsconfig 가 무시되도록 설정 ([66a265f](https://github.com/Team-EdgeEffect/library-js/commit/66a265f63ab7df05c50c0dfd90125ee473b4d89d))
+
 ## [1.1.1](https://github.com/Team-EdgeEffect/library-js/compare/@edge-effect/common-cli@1.1.0...@edge-effect/common-cli@1.1.1) (2025-07-10)
 
 **Note:** Version bump only for package @edge-effect/common-cli
