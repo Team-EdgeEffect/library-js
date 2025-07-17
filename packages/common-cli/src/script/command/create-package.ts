@@ -226,10 +226,9 @@ command
         parsedOption.value
       ) {
         if (!["lib", "react-swc", "react-vite"].includes(parsedOption.value)) {
-          console.error(
+          throw new Error(
             "패키지 타입은 lib, react-swc, react-vite 중 하나여야 합니다. 자세한 내용은 help 옵션을 참고 해주세요."
           );
-          return;
         }
       }
 
@@ -239,10 +238,9 @@ command
         parsedOption.value
       ) {
         if (!["npm", "yarn", "pnpm"].includes(parsedOption.value)) {
-          console.error(
+          throw new Error(
             "패키지 매니저는 npm, yarn, pnpm 중 하나여야 합니다. 자세한 내용은 help 옵션을 참고 해주세요."
           );
-          return;
         }
       }
     }
