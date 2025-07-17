@@ -31,14 +31,16 @@ export const useApiFactoryQuery = <
   ResponseType,
   ErrorType
 > => {
-  const defaultQueryClient = useQueryClient();
-  const queryClient = initialQueryClient ?? defaultQueryClient;
+  const queryClient = useQueryClient(initialQueryClient);
 
-  const query = useQuery<ResponseType, ErrorType>({
-    ...options,
-    queryKey: onCreateKeys(payload),
-    queryFn: async () => await onRequest({ ...payload }, queryClient),
-  });
+  const query = useQuery<ResponseType, ErrorType>(
+    {
+      ...options,
+      queryKey: onCreateKeys(payload),
+      queryFn: async () => await onRequest({ ...payload }, queryClient),
+    },
+    queryClient
+  );
 
   const queryKey = useMemo(
     () => onCreateKeys(payload),
@@ -56,9 +58,9 @@ export const useApiFactoryQuery = <
       [onCreateKeys, payload, queryClient]
     ),
     remove: useCallback(
-      () =>
+      (removePayload) =>
         queryClient.removeQueries({
-          queryKey: onCreateKeys(payload),
+          queryKey: onCreateKeys(removePayload ?? payload),
         }),
       [onCreateKeys, payload, queryClient]
     ),

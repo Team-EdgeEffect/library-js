@@ -1,7 +1,7 @@
 {
   "name": "@edge-effect/react-tanstack-query-factory",
   "description": "Tanstack query factory for react",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "homepage": "https://github.com/Team-EdgeEffect/library-js#readme",
   "author": {
     "name": "@edge-effect#dark1451",
@@ -48,7 +48,7 @@
     "@locked-dobby/eslint-config": "~2.1.0",
     "@swc/cli": "~0.7.7",
     "@swc/core": "~1.11.29",
-    "@tanstack/react-query": "~4.36.1",
+    "@tanstack/react-query": "~5.83.0",
     "@types/react": "~19.1.0",
     "@types/react-dom": "~19.1.0",
     "chokidar": "~4.0.3",
@@ -59,7 +59,7 @@
     "typescript": "~5.8.3"
   },
   "peerDependencies": {
-    "@tanstack/react-query": ">=4.0.0 <5.0.0",
+    "@tanstack/react-query": ">=5.0.0 <6.0.0",
     "react": "~19.1.0",
     "react-dom": "~19.1.0"
   }
