@@ -24,16 +24,21 @@ runs:
       with:
         version: ${{ inputs.pnpm-version }}
 
-    - name: Cache dependencies
+    - name: Get pnpm store directory
+      id: get-store-path
+      shell: bash
+      run: echo STORE_PATH=$(pnpm store path) >> $GITHUB_OUTPUT
+
+    - name: Setup pnpm cache
       uses: actions/cache@v4
+      timeout-minutes: 5
+      id: cache-pnpm-store
       with:
-        path: |
-          **/node_modules
-          **/dist
-        key: deps-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ github.sha }}
+        path: ${{ steps.get-store-path.outputs.STORE_PATH }}
+        key: pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
         restore-keys: |
-          deps-${{ hashFiles('**/pnpm-lock.yaml') }}-
-          deps-
+          pnpm-store-
+          pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
 
     - name: Install dependencies
       shell: bash
