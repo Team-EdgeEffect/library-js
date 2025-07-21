@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/Team-EdgeEffect/library-js/compare/@edge-effect/common-cli@1.2.0...@edge-effect/common-cli@1.3.0) (2025-07-21)
+
+### Bug Fixes
+
+- change variable name case ([9fe5f64](https://github.com/Team-EdgeEffect/library-js/commit/9fe5f641abc7a5cba27c522df20fa4ed5ddbe160))
+- lint ([9eee6b3](https://github.com/Team-EdgeEffect/library-js/commit/9eee6b39a9bef5f825ab978127161e8b900acbc3))
+
+### Features
+
+- add b option to react vite test(build) ([9500dbc](https://github.com/Team-EdgeEffect/library-js/commit/9500dbc4533de0aa95f78171cbc04226d5b3260a))
+- common cli create package 에서 validation 부분에서 쓰로우되도록 수정 ([b63e4ec](https://github.com/Team-EdgeEffect/library-js/commit/b63e4ec69fa1db1302990ef645ac955cd18ff0e3))
+
 # [1.2.0](https://github.com/Team-EdgeEffect/library-js/compare/@edge-effect/common-cli@1.1.1...@edge-effect/common-cli@1.2.0) (2025-07-16)
 
 ### Features
