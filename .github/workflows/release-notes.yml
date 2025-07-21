@@ -4,6 +4,13 @@ on:
   push:
     tags:
       - "@edge-effect/*@*"
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: "Tag name to generate release notes for (e.g., @edge-effect/react-dialog@1.0.0)"
+        required: true
+        type: string
+        default: ""
 
 permissions:
   contents: write
@@ -25,16 +32,31 @@ jobs:
       - name: Set changelog path
         id: changelog
         run: |
-          TAG_NAME="${GITHUB_REF#refs/tags/}"
+          # 입력값이 있으면 사용, 없으면 자동 감지 (${GITHUB_REF#refs/tags/})
+          TAG_NAME="${{ github.event.inputs.tag_name || github.ref_name }}"
+
+          echo "Processing tag: $TAG_NAME"
+
           # 패키지명 추출: @edge-effect/{package-name}@{version} → {package-name}
           PACKAGE_NAME=$(echo "$TAG_NAME" | sed -E 's/@edge-effect\/([^@]+)@.*/\1/')
           CHANGELOG_PATH="packages/${PACKAGE_NAME}/CHANGELOG.md"
+
+          echo "Package name: $PACKAGE_NAME"
+          echo "Changelog path: $CHANGELOG_PATH"
+
+          # set changelog_path
           echo "changelog_path=${CHANGELOG_PATH}" >> $GITHUB_OUTPUT
+
+          # CHANGELOG.md 파일 존재 확인
+          if [ ! -f "$CHANGELOG_PATH" ]; then
+            echo "::warning::Changelog 파일이 없습니다"
+          fi
 
       - name: Generate Release Notes
         uses: softprops/action-gh-release@v1
         with:
           generate_release_notes: true
           files: ${{ steps.changelog.outputs.changelog_path }}
+          tag_name: ${{ github.event.inputs.tag_name || github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
