@@ -226,10 +226,9 @@ command
         parsedOption.value
       ) {
         if (!["lib", "react-swc", "react-vite"].includes(parsedOption.value)) {
-          console.error(
+          throw new Error(
             "패키지 타입은 lib, react-swc, react-vite 중 하나여야 합니다. 자세한 내용은 help 옵션을 참고 해주세요."
           );
-          return;
         }
       }
 
@@ -239,10 +238,9 @@ command
         parsedOption.value
       ) {
         if (!["npm", "yarn", "pnpm"].includes(parsedOption.value)) {
-          console.error(
+          throw new Error(
             "패키지 매니저는 npm, yarn, pnpm 중 하나여야 합니다. 자세한 내용은 help 옵션을 참고 해주세요."
           );
-          return;
         }
       }
     }
@@ -272,7 +270,7 @@ command
     // 기타 전체 옵션에 접근 하는 변수를 선언 합니다.
     const optionVariables = {
       type: bucket.getOptionValueString("type") as CreatePackageType,
-      packageManager: bucket.getOptionValueString("package-manager"),
+      "package-manager": bucket.getOptionValueString("package-manager"),
       tsconfig: bucket.tryOptionValueString("tsconfig"),
       "tsconfig-type": bucket.tryOptionValueString("tsconfig-type"),
       "swc-cjs": bucket.tryOptionValueString("swc-cjs"),
@@ -436,7 +434,7 @@ command
 
     // 패키지 인스톨 작업 - without-install 플래그 확인하여 설치 실행
     if (!optionVariables["without-install"]) {
-      spawnSync(optionVariables.packageManager, ["install"], {
+      spawnSync(optionVariables["package-manager"], ["install"], {
         stdio: "inherit",
         cwd: outputDir,
       });

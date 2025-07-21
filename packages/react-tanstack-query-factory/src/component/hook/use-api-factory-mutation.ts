@@ -31,18 +31,20 @@ export const useApiFactoryMutation = <
   ResponseType,
   ErrorType
 > => {
-  const defaultQueryClient = useQueryClient();
-  const queryClient = initialQueryClient ?? defaultQueryClient;
+  const queryClient = useQueryClient(initialQueryClient);
 
   const mutation = useMutation<
     ResponseType,
     ErrorType,
     ApiRequestPayload<PathType, ParamType, BodyType>
-  >({
-    mutationFn: async (payload) => await onRequest(payload, queryClient),
-    mutationKey: onCreateKeys(),
-    ...options,
-  });
+  >(
+    {
+      ...options,
+      mutationKey: onCreateKeys(),
+      mutationFn: async (payload) => await onRequest(payload, queryClient),
+    },
+    queryClient
+  );
 
   const queryKey = useMemo(() => onCreateKeys(), [onCreateKeys]);
 

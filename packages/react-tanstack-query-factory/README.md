@@ -4,7 +4,7 @@
 
 ## 소개(Description)
 
-TanStack Query를 기반으로 **Query와 Mutation을 한 번에 생성**하여 타입 세이프하고 재사용성 높은 API 훅을 쉽게 구현할 수 있도록 돕는 팩토리 유틸리티입니다.
+TanStack Query(v5)를 기반으로 **Query와 Mutation을 한 번에 생성**하여 타입 세이프하고 재사용성 높은 API 훅을 쉽게 구현할 수 있도록 돕는 팩토리 유틸리티입니다.
 
 또한 팩토리로 생성한 request 구현부를 언제든 호출 할 수 있습니다.
 

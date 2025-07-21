@@ -7,11 +7,11 @@ const ReactQueryFactoryContainer = () => {
   const [mutateResult, setMutateResult] = useState<string>();
   const [requestResult, setRequestResult] = useState<string>();
 
-  const { data, isFetching } = getProduct.useQuery({
+  const { data, isPending: isQueryPending } = getProduct.useQuery({
     path: { productId: "1" },
   });
 
-  const { mutateAsync, isLoading: isMutatePending } = getProduct.useMutation();
+  const { mutateAsync, isPending: isMutatePending } = getProduct.useMutation();
 
   return (
     <>
@@ -23,7 +23,7 @@ const ReactQueryFactoryContainer = () => {
       <ul>
         <li>
           <h2>Query result</h2>
-          {isFetching ? <p>loading...</p> : <p>{data?.description}</p>}
+          {isQueryPending ? <p>loading...</p> : <p>{data?.description}</p>}
         </li>
         <li>
           <h2>Mutation result</h2>
