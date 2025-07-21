@@ -31,7 +31,6 @@ runs:
 
     - name: Setup pnpm cache
       uses: actions/cache@v4
-      timeout-minutes: 5
       id: cache-pnpm-store
       with:
         path: ${{ steps.get-store-path.outputs.STORE_PATH }}
