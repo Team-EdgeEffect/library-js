@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/Team-EdgeEffect/library-js/compare/@edge-effect/common-cli@1.3.0...@edge-effect/common-cli@1.4.0) (2025-07-27)
+
+### Features
+
+- add react/jsx-runtime for react-vite template ([5e60e12](https://github.com/Team-EdgeEffect/library-js/commit/5e60e12a3ec41dfe77601df17dddced187829b54))
+
 # [1.3.0](https://github.com/Team-EdgeEffect/library-js/compare/@edge-effect/common-cli@1.2.0...@edge-effect/common-cli@1.3.0) (2025-07-21)
 
 ### Bug Fixes
