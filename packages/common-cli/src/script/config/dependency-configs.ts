@@ -7,7 +7,7 @@ const sharedDependencies: Array<Dependency> = [
   { name: "chokidar", version: "~4.0.3", targets: ["--save-dev"] },
   { name: "concurrently", version: "~9.1.2", targets: ["--save-dev"] },
   { name: "typescript", version: "~5.8.3", targets: ["--save-dev"] },
-  { name: "onchange", version: "~7.1.0", targets: ["--save-dev"] },
+  { name: "chokidar-cli", version: "~3.0.0", targets: ["--save-dev"] },
 ];
 
 export const dependencyConfigs: Record<CreatePackageType, Dependency[]> = {

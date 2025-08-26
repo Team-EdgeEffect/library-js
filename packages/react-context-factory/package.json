@@ -21,7 +21,7 @@
   },
   "scripts": {
     "dev": "concurrently -k -n CJS,ESM,TYPE,POST 'pnpm build:cjs --watch' 'pnpm build:esm --watch' 'pnpm build:type --watch' 'pnpm dev:post'",
-    "dev:post": "onchange './src/**/*.ts' './src/**/*.tsx' -- pnpm post-build",
+    "dev:post": "chokidar 'src/**/*.ts' 'src/**/*.tsx' -c 'pnpm post-build' --debounce 500 --initial",
     "lint": "eslint .",
     "test": "echo Test skipped! instead build... && tsc && npm run build",
     "build:cjs": "swc src --out-dir ./dist/cjs --config-file swc-cjs.json --ignore '**/*.d.ts' --strip-leading-paths",
@@ -51,8 +51,8 @@
     "@types/react": "~19.1.0",
     "@types/react-dom": "~19.1.0",
     "chokidar": "~4.0.3",
+    "chokidar-cli": "~3.0.0",
     "concurrently": "~9.1.2",
-    "onchange": "~7.1.0",
     "react": ">=18.0.0 <20.0.0",
     "react-dom": ">=18.0.0 <20.0.0",
     "typescript": "~5.8.3"
