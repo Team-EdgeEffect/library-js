@@ -13,6 +13,9 @@ export type UseApiFactoryMutationProps<
   ResponseType,
   ErrorType,
 > = ApiFactoryHookArgs<PathType, ParamType, BodyType, ResponseType> & {
+  mutationKeyPayload?: Partial<
+    ApiRequestPayload<Partial<PathType>, Partial<ParamType>, Partial<BodyType>>
+  >;
   options?: Partial<
     UseMutationOptions<
       ResponseType,

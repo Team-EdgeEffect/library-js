@@ -56,12 +56,15 @@ export const useDialogContextHistory = ({
 
   // history - consume event for hideDialog
   useDialogContextHistoryConsumeEvent({
-    onEvent: useCallback((event) => {
-      if (event.detail.triggerType === "hideDialog") {
-        consumePromiseResolver = event.detail.consumePromiseResolver;
-        window.history.go(-event.detail.consumeSize);
-      }
-    }, []),
+    onEvent: useCallback(
+      (event) => {
+        if (event.detail.triggerType === "hideDialog") {
+          consumePromiseResolver = event.detail.consumePromiseResolver;
+          if (withHistory) window.history.go(-event.detail.consumeSize);
+        }
+      },
+      [withHistory]
+    ),
   });
 
   // history - popstate

@@ -14,7 +14,13 @@ export type ApiFactoryHookArgs<PathType, ParamType, BodyType, ResponseType> = {
     queryClient: QueryClient | undefined
   ) => Promise<ResponseType> | ResponseType;
   onCreateKeys: (
-    payload?: Partial<ApiRequestPayload<PathType, ParamType, BodyType>>
+    payload: Partial<
+      ApiRequestPayload<
+        Partial<PathType>,
+        Partial<ParamType>,
+        Partial<BodyType>
+      >
+    >
   ) => Array<unknown>;
 };
 
@@ -52,7 +58,13 @@ export type CreateApiReturn<
   >;
   getQueryKey: (
     payload?:
-      | Partial<ApiRequestPayload<PathType, ParamType, BodyType>>
+      | Partial<
+          ApiRequestPayload<
+            Partial<PathType>,
+            Partial<ParamType>,
+            Partial<BodyType>
+          >
+        >
       | undefined
   ) => Array<unknown>;
   request: (
@@ -87,9 +99,21 @@ export type ApiRequestPayload<PathType, ParamType, BodyType> =
 export type ApiFactoryHookActions<PathType, ParamType, BodyType> = {
   queryKey: Array<unknown>;
   invalidate: (
-    payload?: ApiRequestPayload<PathType, ParamType, BodyType> | undefined
+    payload: Partial<
+      ApiRequestPayload<
+        Partial<PathType>,
+        Partial<ParamType>,
+        Partial<BodyType>
+      >
+    >
   ) => Promise<void>;
   remove: (
-    payload?: ApiRequestPayload<PathType, ParamType, BodyType> | undefined
+    payload: Partial<
+      ApiRequestPayload<
+        Partial<PathType>,
+        Partial<ParamType>,
+        Partial<BodyType>
+      >
+    >
   ) => void;
 };

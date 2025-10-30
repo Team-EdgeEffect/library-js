@@ -14,6 +14,7 @@ export const useApiFactoryMutation = <
   ResponseType,
   ErrorType,
 >({
+  mutationKeyPayload,
   options,
   onCreateKeys,
   onRequest,
@@ -40,13 +41,16 @@ export const useApiFactoryMutation = <
   >(
     {
       ...options,
-      mutationKey: onCreateKeys(),
+      mutationKey: onCreateKeys(mutationKeyPayload),
       mutationFn: async (payload) => await onRequest(payload, queryClient),
     },
     queryClient
   );
 
-  const queryKey = useMemo(() => onCreateKeys(), [onCreateKeys]);
+  const queryKey = useMemo(
+    () => onCreateKeys(mutationKeyPayload),
+    [onCreateKeys]
+  );
 
   return {
     ...mutation,

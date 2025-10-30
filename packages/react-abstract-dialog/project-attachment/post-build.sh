@@ -18,7 +18,11 @@ find "src" -type f -name "*.d.ts" | while read -r FILE; do
     JS_TARGET="${ADDITIONAL_MODULE}/${JS_PATH}"
     if [ ! -f "$JS_TARGET" ]; then
       mkdir -p "$(dirname "$JS_TARGET")"
-      echo "export {};" > "$JS_TARGET"
+      if [ "$ADDITIONAL_MODULE" = "dist/cjs" ]; then
+        echo "module.exports = {};" > "$JS_TARGET"
+      else
+        echo "export {};" > "$JS_TARGET"
+      fi
       echo "$RELATIVE_PATH → ${JS_TARGET}"
     fi
   done

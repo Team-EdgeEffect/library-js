@@ -3,6 +3,7 @@ import {
   Fragment,
   ReactNode,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -36,6 +37,13 @@ import { useDialogContextHistoryConsumeEvent } from "../hook/use-dialog-context-
 import { useDialogContextScrollBlocking } from "../hook/use-dialog-context-scroll-blocking";
 import { DialogActionContext } from "./dialog-action-context-provider";
 
+type PreHideDialogArgs = {
+  dialogs: Array<Dialog>;
+  options?: HideDialogOptions;
+  withConsumeResolve?: boolean;
+  promiseResolver: (value: void | PromiseLike<void>) => void;
+};
+
 export const buildDialogContext = <
   ConfirmPropType extends ConfirmProps,
   AlertPropType extends AlertProps,
@@ -65,6 +73,9 @@ export const buildDialogContext = <
         ToastPropType
       >) => {
         const [dialogs, setDialogs] = useState<Array<Dialog<unknown>>>([]);
+        const [preHideDialogTask, setPreHideDialogTask] =
+          useState<PreHideDialogArgs>();
+
         const dialogSnapshots = useRef<Array<Dialog<unknown>>>(dialogs);
         const dialogIdInfo = useRef<Record<DialogUnique, Dialog["id"]>>({});
 
@@ -173,12 +184,7 @@ export const buildDialogContext = <
             options,
             withConsumeResolve = true,
             promiseResolver,
-          }: {
-            dialogs: Array<Dialog>;
-            options?: HideDialogOptions;
-            withConsumeResolve?: boolean;
-            promiseResolver: (value: void | PromiseLike<void>) => void;
-          }) => {
+          }: PreHideDialogArgs) => {
             let consumeSize: number = 0;
             dialogs.forEach((dialog) => {
               if (withConsumeResolve) dialog.resultPromiseResolver?.();
@@ -212,7 +218,7 @@ export const buildDialogContext = <
                   dialogs: prevDialogs,
                 });
 
-                preHideDialog({
+                setPreHideDialogTask({
                   dialogs: hides,
                   options,
                   promiseResolver: resolve,
@@ -224,7 +230,7 @@ export const buildDialogContext = <
               });
             });
           },
-          [getHideDialogTargetInfo, preHideDialog]
+          [getHideDialogTargetInfo]
         );
 
         /**
@@ -248,7 +254,7 @@ export const buildDialogContext = <
                 });
 
                 // hide all 에서 promise 를 resolve 시켜줘야 합니다.
-                preHideDialog({
+                setPreHideDialogTask({
                   dialogs: hides,
                   options,
                   withConsumeResolve: false,
@@ -260,7 +266,7 @@ export const buildDialogContext = <
               });
             });
           },
-          [getHideDialogTargetInfo, preHideDialog]
+          [getHideDialogTargetInfo]
         );
 
         const findDialogById = useCallback(
@@ -382,6 +388,16 @@ export const buildDialogContext = <
             [findDialogById, hideDialog]
           ),
         });
+
+        /**
+         * preHideDialog 를 통해 reactdialogconsumehistory 이벤트를 실행 합니다. (strict mode 기반 동작 방식)
+         */
+        useEffect(() => {
+          if (preHideDialogTask) {
+            preHideDialog(preHideDialogTask);
+            setPreHideDialogTask(undefined);
+          }
+        }, [preHideDialog, preHideDialogTask]);
 
         return (
           <context.Provider

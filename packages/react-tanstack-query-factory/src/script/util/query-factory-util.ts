@@ -37,7 +37,7 @@ export const createApi = <
         onRequest,
         ...apiFactoryHookArgs,
       }),
-    getQueryKey: (payload) => onCreateKeys(payload),
+    getQueryKey: (payload) => onCreateKeys(payload ?? {}),
     request: async (payload) => await onRequest(payload, undefined),
   };
 };
